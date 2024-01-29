@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { UserContext } from "../UserContext.jsx";
 
 const HeaderPage = () => {
+  const { user } = useContext(UserContext);
+  console.log("user---->", user);
   return (
     <>
       <header className="flex justify-between">
@@ -78,6 +81,7 @@ const HeaderPage = () => {
               />
             </svg>
           </Link>
+          {!!user && <div>{user.name}</div>}
         </div>
       </header>
     </>
