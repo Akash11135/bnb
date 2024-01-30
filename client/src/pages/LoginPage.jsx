@@ -18,13 +18,13 @@ const LoginPage = () => {
       });
       setUser(response.data);
       setRedirect(true);
+      alert("Login successfull");
     } catch (error) {
       alert("Login failed.Invalid username or password.");
     }
   }
 
   if (redirect) {
-    alert("Login successfull");
     return <Navigate to="/" />;
   }
   return (

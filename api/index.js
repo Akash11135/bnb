@@ -27,7 +27,7 @@ app.get('/test' , (req ,res)=>{
 
 const connectDB = async ()=>{
     try{
-        await mongoose.connect(process.env.MONGO_URI)
+        await mongoose.connect(process.env.MONGO_URI )
     }catch(err){
         console.log("err : ",err)
     }
@@ -38,6 +38,10 @@ connectDB()
 mongoose.connection.once('open',()=>{
     console.log(`connection established on url:${process.env.MONGO_URI}`)
 })
+
+mongoose.connection.on('error', (error) => {
+  console.error('MongoDB connection error:', error);
+});
 
 app.post('/register', async (req, res) => {
     try {
@@ -89,16 +93,24 @@ app.post('/login',async(req,res)=>{
     }
 })
 
+
 app.get('/profile' , (req,res)=>{
     const {token} = req.cookies
     if(token){
-        jwt.verify(token , process.env.JWT_KEY , {} , (error , user)=>{
+        jwt.verify(token , process.env.JWT_KEY , {} , async (error , currUser)=>{
             if (error) throw error
-            res.send(user)
+            const{name , email , _id} = await User.findById(currUser.id)
+            res.json({name , email ,_id})
         })
-    }else{
-        res.json(null)
-    }
+    }else {
+    res.json(null);
+  }
+})
+
+
+app.post('/logout', (req,res)=>{
+   
+    res.cookie('token','').json(true) //set token to empty
 })
 
 app.listen(4000)

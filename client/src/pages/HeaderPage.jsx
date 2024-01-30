@@ -4,11 +4,11 @@ import { UserContext } from "../UserContext.jsx";
 
 const HeaderPage = () => {
   const { user } = useContext(UserContext);
-  console.log("user---->", user);
+
   return (
     <>
       <header className="flex justify-between">
-        <a href="" className="flex gap-1 items-center">
+        <Link to={"/"} className="flex gap-1 items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -24,7 +24,7 @@ const HeaderPage = () => {
             />
           </svg>
           <span className="font-bold text-xl">airbnc</span>
-        </a>
+        </Link>
         <div className="flex items-center gap-2 border border-gray-300 rounded-full py-2 px-4 shadow-md shadow-gray-300 font-bold font-mono">
           <div>Anywhere</div>
           <div className="border border-gray-300 h-5"></div>
@@ -65,7 +65,7 @@ const HeaderPage = () => {
           </svg>
 
           <Link
-            to="/login"
+            to={user ? "/account" : "/login"}
             className="bg-gray-500 rounded-full text-white border border-gray-500 overflow-hidden "
           >
             <svg
