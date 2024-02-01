@@ -5,7 +5,7 @@ import axios from "axios";
 import PlacesPage from "./PlacesPage";
 
 const AccountPage = () => {
-  let { subpage } = useParams();
+  let { subpage, action } = useParams();
   const [redirect, setRedirect] = useState(null);
 
   if (subpage === undefined) {
