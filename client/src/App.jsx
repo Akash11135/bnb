@@ -7,7 +7,6 @@ import RegisterPage from "./pages/RegisterPage.jsx";
 import axios from "axios";
 import { UserContextProvider } from "./UserContext.jsx";
 import AccountPage from "./pages/AccountPage.jsx";
-import PlacesPage from "./pages/PlacesPage.jsx";
 import NotfoundPage from "./NotfoundPage.jsx";
 
 axios.defaults.baseURL = "http://localhost:4000";

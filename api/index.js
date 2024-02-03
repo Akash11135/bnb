@@ -7,10 +7,20 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import env from 'dotenv'
 import cookieParser from 'cookie-parser'
+import imageDowlnoader from 'image-downloader'
+import multer from 'multer'
+import path from 'path'
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+
 env.config()
 
 app.use(cookieParser())  //to read cookie while authentication
-
+app.use('/uploads' , express.static(__dirname+'/uploads'))
 app.use(express.json())     //to use json data in website
 const bcryptSalt = bcrypt.genSaltSync(10)
 
@@ -111,6 +121,21 @@ app.get('/profile' , (req,res)=>{
 app.post('/logout', (req,res)=>{
    
     res.cookie('token','').json(true) //set token to empty
+})
+
+app.post('/upload',async (req,res)=>{
+    const{link} = req.body;
+    const newName = 'photo' + Math.random()*10+ '.jpg'
+    await imageDowlnoader.image({
+        url:link,
+        dest:path.join(__dirname , 'uploads',newName)
+    })
+   
+    res.send(newName)
+})
+
+app.post('/uploads-from-pc',(req,res)=>{
+    console.log("uploaded")
 })
 
 app.listen(4000)
